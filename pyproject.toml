@@ -1,0 +1,9 @@
+[project]
+name = "spotifytolfm-py"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.14"
+dependencies = [
+    "pylast>=6.0.0",
+    "spotipy>=2.25.1",
+]
