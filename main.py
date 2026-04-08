@@ -3,22 +3,29 @@ import re
 import pylast
 import time
 import spotipy
+from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyClientCredentials
 
-################################################################################################
-# Fill out everything between the hashtags
-API_KEY = ""  # your last.fm API key
-API_SECRET = ""  # your last.fm API secret
-SPOTIPY_CLIENT_ID = ""  # your spotify API key
-SPOTIPY_CLIENT_SECRET = ""  # your spotify API secret
+load_dotenv()
 
-offset = 22813  # number of seconds ago to start scrobbling
-################################################################################################
+
+def get_required_env(name):
+    value = os.getenv(name)
+    if not value:
+        raise RuntimeError(f"Missing required environment variable: {name}")
+    return value
+
+
+LASTFM_API_KEY = get_required_env("LASTFM_API_KEY")
+LASTFM_API_SECRET = get_required_env("LASTFM_API_SECRET")
+SPOTIPY_CLIENT_ID = get_required_env("SPOTIPY_CLIENT_ID")
+SPOTIPY_CLIENT_SECRET = get_required_env("SPOTIPY_CLIENT_SECRET")
+offset = 982516
 
 # This snippet is from pylast as an alternative to writing credentials to variables
 
-SESSION_KEY_FILE = os.path.join(os.path.expanduser("~"), ".session_key")
-network = pylast.LastFMNetwork(API_KEY, API_SECRET)
+SESSION_KEY_FILE = ".session_key"
+network = pylast.LastFMNetwork(LASTFM_API_KEY, LASTFM_API_SECRET)
 if not os.path.exists(SESSION_KEY_FILE):
     skg = pylast.SessionKeyGenerator(network)
     url = skg.get_web_auth_url()
