@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SpotifyToLFM.py.iml" filepath="$PROJECT_DIR$/.idea/SpotifyToLFM.py.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/spotifytolfm-py.iml" filepath="$PROJECT_DIR$/.idea/spotifytolfm-py.iml" />
     </modules>
   </component>
 </project>
