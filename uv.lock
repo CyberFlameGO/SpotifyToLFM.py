@@ -123,6 +123,15 @@ wheels = [
 ]
 
 [[package]]
+name = "pymemcache"
+version = "4.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d9/b6/4541b664aeaad025dfb8e851dcddf8e25ab22607e674dd2b562ea3e3586f/pymemcache-4.0.0.tar.gz", hash = "sha256:27bf9bd1bbc1e20f83633208620d56de50f14185055e49504f4f5e94e94aff94", size = 70176, upload-time = "2022-10-17T16:53:07.726Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/41/ba/2f7b22d8135b51c4fefb041461f8431e1908778e6539ff5af6eeaaee367a/pymemcache-4.0.0-py2.py3-none-any.whl", hash = "sha256:f507bc20e0dc8d562f8df9d872107a278df049fa496805c1431b926f3ddd0eab", size = 60772, upload-time = "2022-10-17T16:53:04.388Z" },
+]
+
+[[package]]
 name = "pyperclip"
 version = "1.11.0"
 source = { registry = "https://pypi.org/simple" }
@@ -172,7 +181,7 @@ dependencies = [
     { name = "pylast" },
     { name = "pyperclip" },
     { name = "python-dotenv" },
-    { name = "spotipy" },
+    { name = "spotipy", extra = ["memcache"] },
 ]
 
 [package.metadata]
@@ -180,7 +189,7 @@ requires-dist = [
     { name = "pylast", specifier = ">=6.0.0" },
     { name = "pyperclip", specifier = ">=1.11.0" },
     { name = "python-dotenv", specifier = ">=1.2.2" },
-    { name = "spotipy", specifier = ">=2.25.1" },
+    { name = "spotipy", extras = ["memcache"], specifier = ">=2.25.1" },
 ]
 
 [[package]]
@@ -195,6 +204,11 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/88/00/2de6f99c9b8e5fd519fd55b11ec94b8e97a51e8a9fdf546edfe6aaf8727b/spotipy-2.26.0.tar.gz", hash = "sha256:df6a25d8209072efa8cea165608ee644884e3804f8762b6d8e06ca1a5c7f8a63", size = 45292, upload-time = "2026-03-03T16:37:39.367Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f5/ff/594b82c19b3291eb3f9454beba7f74f19753035fb9b3e54eebd5ae5013a6/spotipy-2.26.0-py3-none-any.whl", hash = "sha256:2726854ddfa0e5624aada592e737832ec75bdc00ae12c102779f8bd995329d49", size = 31985, upload-time = "2026-03-03T16:37:38.225Z" },
+]
+
+[package.optional-dependencies]
+memcache = [
+    { name = "pymemcache" },
 ]
 
 [[package]]

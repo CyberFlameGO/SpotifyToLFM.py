@@ -7,5 +7,9 @@ dependencies = [
     "pylast>=6.0.0",
     "pyperclip>=1.11.0",
     "python-dotenv>=1.2.2",
-    "spotipy>=2.25.1",
+    "spotipy[memcache]>=2.25.1",
 ]
+
+[tool.pyright]
+reportUnknownMemberType = false
+reportUnknownVariableType = false

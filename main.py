@@ -101,9 +101,7 @@ def scrobble(
 def get_track_and_scrobble(link_id: str, timestamp: float | None = None) -> int:
     """Gets track information from Spotify and scrobbles it."""
     timestamp = time.time() if timestamp is None else timestamp
-    track_info = cast(
-        dict[str, object] | None, sp.track(link_id)
-    )  # pyright: ignore[reportUnknownMemberType]
+    track_info = cast(dict[str, object] | None, sp.track(link_id))
     if not track_info:
         print(f"Could not find track with ID: {link_id}")
         return 0
@@ -123,13 +121,9 @@ def get_track_and_scrobble(link_id: str, timestamp: float | None = None) -> int:
         print(f"Track info for {link_id} is missing required fields. Skipping.")
         return 0
 
-    album_dict = album_info  # pyright: ignore[reportUnknownVariableType]
-    album_name = album_dict.get(
-        "name"
-    )  # pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]
-    album_artists_info = album_dict.get(
-        "artists"
-    )  # pyright: ignore[reportUnknownVariableType, reportUnknownMemberType]
+    album_dict = album_info
+    album_name = album_dict.get("name")
+    album_artists_info = album_dict.get("artists")
 
     first_artist = cast(dict[str, object], artists_info[0])
     artist_name = first_artist.get("name")
@@ -176,29 +170,21 @@ def scrobble_list(
         return
 
     total_time = 0
-    for item in items:  # pyright: ignore[reportUnknownVariableType]
+    for item in items:
         if not isinstance(item, dict):
             continue
-        item_dict = item  # pyright: ignore[reportUnknownVariableType]
+        item_dict = item
         with suppress(TypeError, KeyError):
             match list_type:
                 case "playlist":
-                    track_item = item_dict.get(
-                        "track"
-                    )  # pyright: ignore[reportUnknownVariableType, reportUnknownMemberType]
+                    track_item = item_dict.get("track")
                     if isinstance(track_item, dict):
-                        track_dict = (
-                            track_item  # pyright: ignore[reportUnknownVariableType]
-                        )
-                        duration = track_dict.get(
-                            "duration_ms"
-                        )  # pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]
+                        track_dict = track_item
+                        duration = track_dict.get("duration_ms")
                         if isinstance(duration, int):
                             total_time += duration
                 case "album":
-                    duration = item_dict.get(
-                        "duration_ms"
-                    )  # pyright: ignore[reportUnknownVariableType, reportUnknownMemberType]
+                    duration = item_dict.get("duration_ms")
                     if isinstance(duration, int):
                         total_time += duration
                 case _:
@@ -206,41 +192,27 @@ def scrobble_list(
 
     timestamp -= round(total_time / 1000)
 
-    for item in items:  # pyright: ignore[reportUnknownVariableType]
+    for item in items:
         if not isinstance(item, dict):
             continue
 
-        item_dict = item  # pyright: ignore[reportUnknownVariableType]
+        item_dict = item
         item_link = None
         with suppress(TypeError, KeyError):
             match list_type:
                 case "playlist":
-                    track_item = item_dict.get(
-                        "track"
-                    )  # pyright: ignore[reportUnknownVariableType, reportUnknownMemberType]
+                    track_item = item_dict.get("track")
                     if isinstance(track_item, dict):
-                        track_dict = (
-                            track_item  # pyright: ignore[reportUnknownVariableType]
-                        )
-                        external_urls = track_dict.get(
-                            "external_urls"
-                        )  # pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]
+                        track_dict = track_item
+                        external_urls = track_dict.get("external_urls")
                         if isinstance(external_urls, dict):
-                            urls_dict = external_urls  # pyright: ignore[reportUnknownVariableType]
-                            item_link = urls_dict.get(
-                                "spotify"
-                            )  # pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]
+                            urls_dict = external_urls
+                            item_link = urls_dict.get("spotify")
                 case "album":
-                    external_urls = item_dict.get(
-                        "external_urls"
-                    )  # pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]
+                    external_urls = item_dict.get("external_urls")
                     if isinstance(external_urls, dict):
-                        urls_dict = (
-                            external_urls  # pyright: ignore[reportUnknownVariableType]
-                        )
-                        item_link = urls_dict.get(
-                            "spotify"
-                        )  # pyright: ignore[reportUnknownVariableType, reportUnknownMemberType]
+                        urls_dict = external_urls
+                        item_link = urls_dict.get("spotify")
                 case _:
                     pass
 
@@ -265,12 +237,10 @@ def process_link(link: str, timestamp: float | None = None) -> None:
             case "playlist":
                 playlist_info = cast(
                     dict[str, object] | None, sp.playlist_items(link_id)
-                )  # pyright: ignore[reportUnknownMemberType]
+                )
                 scrobble_list(playlist_info, "playlist", timestamp)
             case "album":
-                album_info = cast(
-                    dict[str, object] | None, sp.album_tracks(link_id)
-                )  # pyright: ignore[reportUnknownMemberType]
+                album_info = cast(dict[str, object] | None, sp.album_tracks(link_id))
                 scrobble_list(album_info, "album", timestamp)
             case "track":
                 _ = get_track_and_scrobble(link_id, timestamp)
@@ -306,6 +276,7 @@ if __name__ == "__main__":
 
             if not line:
                 print("Empty submission. Skipping…")
+                continue
 
             if line.lower() == "paste":
                 clipboard_content = pyperclip.paste()
